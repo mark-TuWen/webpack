@@ -1,0 +1,89 @@
+nodejs和git必备工具（略）
+使用项目模板前需先安装vue-cli，执行以下命令安装vue-cli
+npm install -g vue-cli
+安装完vue-cli就可以基于vue-webpack-simple模板和vue-webpack模板创建项目
+vue init webpack-simple projectName     (projectName为项目名)
+vue init webpack projectName  
+
+一，使用vue-webpack-simple模板创建项目：
+  1，生成项目：在项目相关目录Git Bash Here，输入以下命令，
+        vue init webpack-simple projectName
+        ps：webpack-simple为项目模板名称，projectName为项目名称
+   2，项目结构：
+[图片]
+  文件树结构：
+[图片]
+  webpack.config.js配置节点编译（entry）入口以及节点输出（output）出口
+  ps：编译src/main.js文件输出到dist/build.js文件
+3，安装项目依赖
+  执行以下命令安装依赖
+  npm install  
+  ps：安装完后项目目录会生成一个node_modules文件夹
+4，运行示例
+   执行以下命令
+   npm run dev
+   ps：并不会在dist目录生成build.js文件，开发环境下build.js文件是运行在内存中
+5，发布
+    执行以下命令
+   npm run build
+    ps：生成发布时的build.js文件，经过压缩的
+
+二，使用vue-webpack模板创建项目：
+   1，生成项目：在项目相关目录Git Bash Here，输入以下命令，
+        vue init webpack projectName
+        ps：webpack-simple为项目模板名称，projectName为项目名称
+   2，项目结构：
+[图片]
+  文件树结构：
+[图片]
+
+3，安装项目依赖
+  执行以下命令安装依赖
+  npm install  
+  ps：安装完后项目目录会生成一个node_modules文件夹
+4，运行示例
+   执行以下命令
+   npm run dev
+5，发布
+    执行以下命令
+   npm run build
+    ps：发布时所有静态资源，包括index.html都生成到dist目录中（模板异同点）
+[图片]
+
+三，部署上线：
+      创建一个单独的config文件，因为部署上线使用webpack的时候我们不需要一些dev-tools,dev-server和jshint校验等，复制我们现有的config文件，命名为 webpack.production.config.js，将里面关于 devServer等和开发有关的东西删掉在package.json中添加一个命令。
+
+  "scripts": {
+    "start": "webpack-dev-server --hot --inline",
+    "build": "webpack --progress --profile --colors --config webpack.production.config.js"
+  },
+
+运行
+npm run build
+
+可以发现build文件夹中生成了所有东西。
+分离app.js和第三方库
+现在我们build出来的只有一个bundle.js 如果第三方库很多的话，会造成这个文件非常大，减慢加载速度，现在我们要把第三方库和我们app本身的代码分成两个文件。
+修改entry入口文件
+
+  entry: {
+    app: path.resolve(APP_PATH, 'index.js'),
+    //添加要打包在vendors里面的库
+    vendors: ['jquery', 'moment']
+  },
+
+添加CommonsChunkPlugin
+
+  plugins: [
+    //这个使用uglifyJs压缩你的js代码
+    new webpack.optimize.UglifyJsPlugin({minimize: true}),
+    //把入口文件里面的数组打包成verdors.js
+    new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
+    new HtmlwebpackPlugin({
+      title: 'Hello World app'
+    })
+  ]
+
+添加完毕 运行npm run build
+  
+
