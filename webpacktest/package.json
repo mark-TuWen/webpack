@@ -9,6 +9,11 @@
   "author": "hrh",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^1.13.3"
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.16.0",
+    "jquery": "^3.1.1"
   }
 }
