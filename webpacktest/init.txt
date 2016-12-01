@@ -1,1 +1,2 @@
-1,npm init 初始化name不要起webpack,否则安装依赖（npm install webpack --save-dev）会报错
+1,npm init 初始化name不要起webpack,否则安装项目依赖（npm install webpack --save-dev）会报错
+2，github提交不提交node_modules （生成.gitignore文件）
