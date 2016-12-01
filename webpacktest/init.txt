@@ -1,0 +1,1 @@
+1,npm init 初始化name不要起webpack,否则安装依赖（npm install webpack --save-dev）会报错
